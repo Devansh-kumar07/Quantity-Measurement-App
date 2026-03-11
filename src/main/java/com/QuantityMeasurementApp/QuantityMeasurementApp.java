@@ -1,31 +1,33 @@
 package com.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
-
-	// UC - 1
-	
 	public static class Feet {
 		private final double value;
 
 		public Feet(double value) {
 			this.value = value;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
 
-			if (obj == null || getClass() != obj.getClass())
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj == null || getClass() != obj.getClass()) {
 				return false;
+			}
 
 			Feet other = (Feet) obj;
+
 			return Double.compare(this.value, other.value) == 0;
 		}
 	}
 
 	// UC - 2
 	public static class Inches {
+
 		private final double value;
 
 		public Inches(double value) {
@@ -34,11 +36,14 @@ public class QuantityMeasurementApp {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
 
-			if (obj == null || getClass() != obj.getClass())
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj == null || getClass() != obj.getClass()) {
 				return false;
+			}
 
 			Inches other = (Inches) obj;
 			return Double.compare(this.value, other.value) == 0;
@@ -47,7 +52,8 @@ public class QuantityMeasurementApp {
 
 	// UC - 3
 	public enum Unit {
-		FEET(12.0), INCH(1.0);
+
+		FEET(12.0), INCH(1.0), YARDS(36.0), CENTIMETERS(0.393701);
 
 		private final double conversionFactorToInch;
 
@@ -60,7 +66,6 @@ public class QuantityMeasurementApp {
 		}
 	}
 
-	// Made static to avoid inner class error
 	public static class QuantityLength {
 
 		private final double value;
@@ -73,11 +78,14 @@ public class QuantityMeasurementApp {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
 
-			if (obj == null || getClass() != obj.getClass())
+			if (this == obj) {
+				return true;
+			}
+
+			if (obj == null || getClass() != obj.getClass()) {
 				return false;
+			}
 
 			QuantityLength other = (QuantityLength) obj;
 
@@ -89,15 +97,13 @@ public class QuantityMeasurementApp {
 	}
 
 	public static void main(String[] args) {
-
-		// UC - 1
 		Feet feet1 = new Feet(1.0);
 		Feet feet2 = new Feet(1.0);
 
-		boolean feetResult = feet1.equals(feet2);
+		boolean result = feet1.equals(feet2);
 
 		System.out.println("Input: 1.0 ft and 1.0 ft");
-		System.out.println("Output: Equal (" + feetResult + ")");
+		System.out.println("Output: Equal (" + result + ")");
 
 		// UC - 2
 		Inches inch1 = new Inches(1.0);
@@ -109,12 +115,20 @@ public class QuantityMeasurementApp {
 		System.out.println("Output: Equal (" + inchResult + ")");
 
 		// UC - 3
-		QuantityLength lengthFeet = new QuantityLength(1.0, Unit.FEET);
-		QuantityLength lengthInch = new QuantityLength(12.0, Unit.INCH);
+		QuantityLength feet = new QuantityLength(1.0, Unit.FEET);
+		QuantityLength inch = new QuantityLength(12.0, Unit.INCH);
 
-		boolean lengthResult = lengthFeet.equals(lengthInch);
+		boolean resultUC3 = feet.equals(inch);
 
 		System.out.println("Input: 1.0 ft and 12.0 inch");
-		System.out.println("Output: Equal (" + lengthResult + ")");
+		System.out.println("Output: Equal (" + resultUC3 + ")");
+
+		// UC - 4
+		System.out.println("UC4 → " + new QuantityLength(1.0, Unit.YARDS).equals(new QuantityLength(3.0, Unit.FEET)));
+
+		System.out.println("UC4 → " + new QuantityLength(1.0, Unit.YARDS).equals(new QuantityLength(36.0, Unit.INCH)));
+
+		System.out.println(
+				"UC4 → " + new QuantityLength(1.0, Unit.CENTIMETERS).equals(new QuantityLength(0.393701, Unit.INCH)));
 	}
 }
