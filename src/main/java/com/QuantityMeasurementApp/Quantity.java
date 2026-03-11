@@ -87,4 +87,14 @@ public class Quantity<U extends IMeasurable> {
     public String toString() {
         return "Quantity(" + value + ", " + unit.getUnitName() + ")";
     }
+
+	public double getValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public Object getUnit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -2,49 +2,18 @@ package com.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
 
-    public static <U extends IMeasurable> void demonstrateEquality(
-            Quantity<U> q1,
-            Quantity<U> q2) {
+	public static void main(String[] args) {
 
-        System.out.println(q1 + " equals " + q2 + " → " + q1.equals(q2));
-    }
+		Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
 
-    public static <U extends IMeasurable> void demonstrateConversion(
-            Quantity<U> q,
-            U targetUnit) {
+		Quantity<LengthUnit> l2 = new Quantity<>(12.0, LengthUnit.INCH);
 
-        System.out.println(q + " → " + q.convertTo(targetUnit));
-    }
+		System.out.println("Length Equal? " + l1.equals(l2));
 
-    public static <U extends IMeasurable> void demonstrateAddition(
-            Quantity<U> a,
-            Quantity<U> b,
-            U targetUnit) {
+		Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-        System.out.println(a + " + " + b + " → " + a.add(b, targetUnit));
-    }
+		Quantity<WeightUnit> w2 = new Quantity<>(1000.0, WeightUnit.GRAM);
 
-    public static void main(String[] args) {
-
-        Quantity<LengthUnit> feet =
-                new Quantity<>(1.0, LengthUnit.FEET);
-
-        Quantity<LengthUnit> inch =
-                new Quantity<>(12.0, LengthUnit.INCH);
-
-        demonstrateEquality(feet, inch);
-        demonstrateConversion(feet, LengthUnit.INCH);
-        demonstrateAddition(feet, inch, LengthUnit.FEET);
-
-
-        Quantity<WeightUnit> kg =
-                new Quantity<>(1.0, WeightUnit.KILOGRAM);
-
-        Quantity<WeightUnit> g =
-                new Quantity<>(1000.0, WeightUnit.GRAM);
-
-        demonstrateEquality(kg, g);
-        demonstrateConversion(kg, WeightUnit.GRAM);
-        demonstrateAddition(kg, g, WeightUnit.KILOGRAM);
-    }
+		System.out.println("Weight Equal? " + w1.equals(w2));
+	}
 }
