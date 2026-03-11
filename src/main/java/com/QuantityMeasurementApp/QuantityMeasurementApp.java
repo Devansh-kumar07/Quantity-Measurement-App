@@ -216,5 +216,42 @@ public class QuantityMeasurementApp {
 
         System.out.println("Add in YARDS → " +
                 QuantityLength.add(a, b, LengthUnit.YARDS));
+     // UC9 → Weight Measurements
+
+        System.out.println("\nUC9 Weight Equality:");
+
+        QuantityWeight kg1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+        QuantityWeight g1 = new QuantityWeight(1000.0, WeightUnit.GRAM);
+
+        System.out.println("1 kg equals 1000 g → " + kg1.equals(g1));
+
+        QuantityWeight lb1 = new QuantityWeight(2.20462, WeightUnit.POUND);
+
+        System.out.println("1 kg equals 2.20462 lb → " + kg1.equals(lb1));
+
+
+        System.out.println("\nUC9 Weight Conversions:");
+
+        QuantityWeight convertedGram = kg1.convertTo(WeightUnit.GRAM);
+
+        System.out.println("1 kg → " + convertedGram);
+
+        QuantityWeight convertedPound = kg1.convertTo(WeightUnit.POUND);
+
+        System.out.println("1 kg → " + convertedPound);
+
+
+        System.out.println("\nUC9 Weight Addition:");
+
+        QuantityWeight w1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+        QuantityWeight w2 = new QuantityWeight(1000.0, WeightUnit.GRAM);
+
+        System.out.println("Add kg + g → " + w1.add(w2));
+
+        System.out.println("Add with target unit (GRAM) → " +
+                QuantityWeight.add(w1, w2, WeightUnit.GRAM));
+
+        System.out.println("Add with target unit (POUND) → " +
+                QuantityWeight.add(w1, w2, WeightUnit.POUND));
     }
 }
