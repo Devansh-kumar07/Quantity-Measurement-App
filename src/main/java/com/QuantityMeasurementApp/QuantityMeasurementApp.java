@@ -2,256 +2,49 @@ package com.QuantityMeasurementApp;
 
 public class QuantityMeasurementApp {
 
-    // UC1
-    public static class Feet {
-        private final double value;
+    public static <U extends IMeasurable> void demonstrateEquality(
+            Quantity<U> q1,
+            Quantity<U> q2) {
 
-        public Feet(double value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-
-            if (this == obj) return true;
-
-            if (obj == null || getClass() != obj.getClass()) return false;
-
-            Feet other = (Feet) obj;
-
-            return Double.compare(this.value, other.value) == 0;
-        }
+        System.out.println(q1 + " equals " + q2 + " → " + q1.equals(q2));
     }
 
-    // UC2
-    public static class Inches {
+    public static <U extends IMeasurable> void demonstrateConversion(
+            Quantity<U> q,
+            U targetUnit) {
 
-        private final double value;
-
-        public Inches(double value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-
-            if (this == obj) return true;
-
-            if (obj == null || getClass() != obj.getClass()) return false;
-
-            Inches other = (Inches) obj;
-
-            return Double.compare(this.value, other.value) == 0;
-        }
+        System.out.println(q + " → " + q.convertTo(targetUnit));
     }
 
+    public static <U extends IMeasurable> void demonstrateAddition(
+            Quantity<U> a,
+            Quantity<U> b,
+            U targetUnit) {
 
-    // UC3 → QuantityLength
-    public static class QuantityLength {
-
-        public double value;
-        private final LengthUnit unit;
-
-        public QuantityLength(double value, LengthUnit unit) {
-            this.value = value;
-            this.unit = unit;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-
-            if (this == obj) return true;
-
-            if (obj == null || getClass() != obj.getClass()) return false;
-
-            QuantityLength other = (QuantityLength) obj;
-
-            double thisBase = this.unit.convertToBaseUnit(this.value);
-            double otherBase = other.unit.convertToBaseUnit(other.value);
-
-            return Double.compare(thisBase, otherBase) == 0;
-        }
-
-        // UC5 conversion
-        public static double convert(double value, LengthUnit source, LengthUnit target) {
-
-            if (!Double.isFinite(value))
-                throw new IllegalArgumentException("Invalid numeric value");
-
-            if (source == null || target == null)
-                throw new IllegalArgumentException("Unit cannot be null");
-
-            double base = source.convertToBaseUnit(value);
-
-            return target.convertFromBaseUnit(base);
-        }
-
-        public QuantityLength convertTo(LengthUnit target) {
-
-            double converted = convert(this.value, this.unit, target);
-
-            return new QuantityLength(converted, target);
-        }
-
-        @Override
-        public String toString() {
-            return "Quantity(" + value + ", " + unit + ")";
-        }
-
-        // UC6 addition
-        public QuantityLength add(QuantityLength other) {
-
-            if (other == null)
-                throw new IllegalArgumentException("Second operand cannot be null");
-
-            double base1 = this.unit.convertToBaseUnit(this.value);
-            double base2 = other.unit.convertToBaseUnit(other.value);
-
-            double sum = base1 + base2;
-
-            double result = this.unit.convertFromBaseUnit(sum);
-
-            return new QuantityLength(result, this.unit);
-        }
-
-        public static QuantityLength add(QuantityLength a, QuantityLength b) {
-
-            if (a == null || b == null)
-                throw new IllegalArgumentException("Operands cannot be null");
-
-            return a.add(b);
-        }
-
-        // UC7 addition with target unit
-        public static QuantityLength add(QuantityLength a, QuantityLength b, LengthUnit targetUnit) {
-
-            if (a == null || b == null)
-                throw new IllegalArgumentException("Operands cannot be null");
-
-            if (targetUnit == null)
-                throw new IllegalArgumentException("Target unit cannot be null");
-
-            double base1 = a.unit.convertToBaseUnit(a.value);
-            double base2 = b.unit.convertToBaseUnit(b.value);
-
-            double sum = base1 + base2;
-
-            double result = targetUnit.convertFromBaseUnit(sum);
-
-            return new QuantityLength(result, targetUnit);
-        }
+        System.out.println(a + " + " + b + " → " + a.add(b, targetUnit));
     }
-
-
-    // UC5 helpers
-    public static void demonstrateLengthConversion(double value, LengthUnit from, LengthUnit to) {
-
-        double result = QuantityLength.convert(value, from, to);
-
-        System.out.println("convert(" + value + ", " + from + ", " + to + ") → " + result);
-    }
-
-    public static void demonstrateLengthConversion(QuantityLength length, LengthUnit to) {
-
-        QuantityLength converted = length.convertTo(to);
-
-        System.out.println(length + " → " + converted);
-    }
-
-    public static void demonstrateLengthEquality(QuantityLength l1, QuantityLength l2) {
-
-        System.out.println(l1 + " equals " + l2 + " ? " + l1.equals(l2));
-    }
-
 
     public static void main(String[] args) {
 
-        Feet feet1 = new Feet(1.0);
-        Feet feet2 = new Feet(1.0);
+        Quantity<LengthUnit> feet =
+                new Quantity<>(1.0, LengthUnit.FEET);
 
-        System.out.println("Input: 1.0 ft and 1.0 ft");
-        System.out.println("Output: Equal (" + feet1.equals(feet2) + ")");
+        Quantity<LengthUnit> inch =
+                new Quantity<>(12.0, LengthUnit.INCH);
 
-
-        Inches inch1 = new Inches(1.0);
-        Inches inch2 = new Inches(1.0);
-
-        System.out.println("Input: 1.0 inch and 1.0 inch");
-        System.out.println("Output: Equal (" + inch1.equals(inch2) + ")");
+        demonstrateEquality(feet, inch);
+        demonstrateConversion(feet, LengthUnit.INCH);
+        demonstrateAddition(feet, inch, LengthUnit.FEET);
 
 
-        QuantityLength feet = new QuantityLength(1.0, LengthUnit.FEET);
-        QuantityLength inch = new QuantityLength(12.0, LengthUnit.INCH);
+        Quantity<WeightUnit> kg =
+                new Quantity<>(1.0, WeightUnit.KILOGRAM);
 
-        System.out.println("Input: 1.0 ft and 12.0 inch");
-        System.out.println("Output: Equal (" + feet.equals(inch) + ")");
+        Quantity<WeightUnit> g =
+                new Quantity<>(1000.0, WeightUnit.GRAM);
 
-
-        System.out.println("UC4 → " +
-                new QuantityLength(1.0, LengthUnit.YARDS)
-                        .equals(new QuantityLength(3.0, LengthUnit.FEET)));
-
-
-        System.out.println("\nUC5 Conversions:");
-
-        demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCH);
-        demonstrateLengthConversion(3.0, LengthUnit.YARDS, LengthUnit.FEET);
-
-
-        System.out.println("\nUC6 Addition:");
-
-        QuantityLength a = new QuantityLength(1.0, LengthUnit.FEET);
-        QuantityLength b = new QuantityLength(12.0, LengthUnit.INCH);
-
-        System.out.println("Add: " + a + " + " + b + " → " + a.add(b));
-
-
-        System.out.println("\nUC7 Addition with Target Unit:");
-
-        System.out.println("Add in FEET → " +
-                QuantityLength.add(a, b, LengthUnit.FEET));
-
-        System.out.println("Add in INCH → " +
-                QuantityLength.add(a, b, LengthUnit.INCH));
-
-        System.out.println("Add in YARDS → " +
-                QuantityLength.add(a, b, LengthUnit.YARDS));
-     // UC9 → Weight Measurements
-
-        System.out.println("\nUC9 Weight Equality:");
-
-        QuantityWeight kg1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
-        QuantityWeight g1 = new QuantityWeight(1000.0, WeightUnit.GRAM);
-
-        System.out.println("1 kg equals 1000 g → " + kg1.equals(g1));
-
-        QuantityWeight lb1 = new QuantityWeight(2.20462, WeightUnit.POUND);
-
-        System.out.println("1 kg equals 2.20462 lb → " + kg1.equals(lb1));
-
-
-        System.out.println("\nUC9 Weight Conversions:");
-
-        QuantityWeight convertedGram = kg1.convertTo(WeightUnit.GRAM);
-
-        System.out.println("1 kg → " + convertedGram);
-
-        QuantityWeight convertedPound = kg1.convertTo(WeightUnit.POUND);
-
-        System.out.println("1 kg → " + convertedPound);
-
-
-        System.out.println("\nUC9 Weight Addition:");
-
-        QuantityWeight w1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
-        QuantityWeight w2 = new QuantityWeight(1000.0, WeightUnit.GRAM);
-
-        System.out.println("Add kg + g → " + w1.add(w2));
-
-        System.out.println("Add with target unit (GRAM) → " +
-                QuantityWeight.add(w1, w2, WeightUnit.GRAM));
-
-        System.out.println("Add with target unit (POUND) → " +
-                QuantityWeight.add(w1, w2, WeightUnit.POUND));
+        demonstrateEquality(kg, g);
+        demonstrateConversion(kg, WeightUnit.GRAM);
+        demonstrateAddition(kg, g, WeightUnit.KILOGRAM);
     }
 }
