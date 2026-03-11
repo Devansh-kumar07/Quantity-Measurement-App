@@ -206,4 +206,31 @@ public class QuantityMeasurementAppTest {
                 result.convertTo(WeightUnit.KILOGRAM).value,
                 1e-6);
     }
+    //uc-12 test case
+    @Test
+    void testSubtraction_FeetMinusInch() {
+
+        Quantity<LengthUnit> a =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> b =
+                new Quantity<>(6.0, LengthUnit.INCH);
+
+        Quantity<LengthUnit> result = a.subtract(b);
+
+        assertEquals(9.5, result.value, 1e-6);
+    }
+    @Test
+    void testDivision_FeetByFeet() {
+
+        Quantity<LengthUnit> a =
+                new Quantity<>(10.0, LengthUnit.FEET);
+
+        Quantity<LengthUnit> b =
+                new Quantity<>(5.0, LengthUnit.FEET);
+
+        double result = a.divide(b);
+
+        assertEquals(2.0, result);
+    }
 }

@@ -77,6 +77,59 @@ public class Quantity<U extends IMeasurable> {
 
         return Math.abs(base1 - base2) < 1e-6;
     }
+    public Quantity<U> subtract(Quantity<U> other) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Quantity cannot be null");
+
+        if (!this.unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Different measurement categories");
+
+        double base1 = this.unit.convertToBaseUnit(this.value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        double resultBase = base1 - base2;
+
+        double result = this.unit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(result, this.unit);
+    }
+    public Quantity<U> subtract(Quantity<U> other, U targetUnit) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Quantity cannot be null");
+
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        if (!this.unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Different measurement categories");
+
+        double base1 = this.unit.convertToBaseUnit(this.value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        double resultBase = base1 - base2;
+
+        double result = targetUnit.convertFromBaseUnit(resultBase);
+
+        return new Quantity<>(result, targetUnit);
+    }
+    public double divide(Quantity<U> other) {
+
+        if (other == null)
+            throw new IllegalArgumentException("Quantity cannot be null");
+
+        if (!this.unit.getClass().equals(other.unit.getClass()))
+            throw new IllegalArgumentException("Different measurement categories");
+
+        double base1 = this.unit.convertToBaseUnit(this.value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
+
+        if (base2 == 0)
+            throw new ArithmeticException("Division by zero");
+
+        return base1 / base2;
+    }
 
     @Override
     public int hashCode() {

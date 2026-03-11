@@ -15,5 +15,17 @@ public class QuantityMeasurementApp {
 		Quantity<WeightUnit> w2 = new Quantity<>(1000.0, WeightUnit.GRAM);
 
 		System.out.println("Weight Equal? " + w1.equals(w2));
+		//uc -12 
+		Quantity<LengthUnit> a =
+		        new Quantity<>(10.0, LengthUnit.FEET);
+
+		Quantity<LengthUnit> b =
+		        new Quantity<>(6.0, LengthUnit.INCH);
+
+		System.out.println(a.subtract(b));  
+		// Output → Quantity(9.5 FEET)
+
+		System.out.println(a.divide(b));  
+		// Output → 20.0
 	}
 }
