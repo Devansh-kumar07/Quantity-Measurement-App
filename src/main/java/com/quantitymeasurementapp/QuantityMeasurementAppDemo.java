@@ -1,6 +1,6 @@
-package com.QuantityMeasurementApp;
+package com.quantitymeasurementapp;
 
-public class QuantityMeasurementApp {
+public class QuantityMeasurementAppDemo {
 
 	public static void main(String[] args) {
 

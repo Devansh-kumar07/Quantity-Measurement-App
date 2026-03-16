@@ -3,6 +3,12 @@ package com.QuantityMeasurementApp;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import com.quantitymeasurementapp.LengthUnit;
+import com.quantitymeasurementapp.Quantity;
+import com.quantitymeasurementapp.TemperatureUnit;
+import com.quantitymeasurementapp.VolumeUnit;
+import com.quantitymeasurementapp.WeightUnit;
+
 public class QuantityMeasurementAppTest {
 
     // =============================
