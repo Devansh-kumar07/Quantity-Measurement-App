@@ -47,6 +47,9 @@ public class Quantity<U extends IMeasurable> {
 
         validateArithmeticOperands(other);
 
+        // UC14 check
+        this.unit.validateOperationSupport(operation.name());
+
         double base1 = this.unit.convertToBaseUnit(this.value);
         double base2 = other.unit.convertToBaseUnit(other.value);
 
@@ -78,16 +81,6 @@ public class Quantity<U extends IMeasurable> {
 
 
 
-    public Quantity<U> add(Quantity<U> other, WeightUnit kilogram) {
-
-        double resultBase =
-                performBaseArithmetic(other, ArithmeticOperation.ADD);
-
-        double result =
-                this.unit.convertFromBaseUnit(resultBase);
-
-        return new Quantity<>(result, this.unit);
-    }
     public Quantity<U> add(Quantity<U> other, U targetUnit) {
 
         if (targetUnit == null)
@@ -100,6 +93,16 @@ public class Quantity<U extends IMeasurable> {
                 targetUnit.convertFromBaseUnit(baseResult);
 
         return new Quantity<>(result, targetUnit);
+    }
+    public Quantity<U> add(Quantity<U> other) {
+
+        double baseResult =
+                performBaseArithmetic(other, ArithmeticOperation.ADD);
+
+        double result =
+                this.unit.convertFromBaseUnit(baseResult);
+
+        return new Quantity<>(result, this.unit);
     }
 
     @Override
@@ -157,14 +160,11 @@ public class Quantity<U extends IMeasurable> {
     public String toString() {
         return "Quantity(" + value + ", " + unit.getUnitName() + ")";
     }
+    public double getValue() {
+        return value;
+    }
 
-	public double getValue() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Object getUnit() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public U getUnit() {
+        return unit;
+    }
 }

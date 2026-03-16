@@ -27,5 +27,20 @@ public class QuantityMeasurementApp {
 
 		System.out.println(a.divide(b));  
 		// Output → 20.0
+		//UC-14 example
+		Quantity<TemperatureUnit> c =
+		        new Quantity<>(0.0, TemperatureUnit.CELSIUS);
+
+		Quantity<TemperatureUnit> f =
+		        new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
+
+		System.out.println(c.equals(f)); // true
+		//cocnversion
+		Quantity<TemperatureUnit> temp =
+		        new Quantity<>(100.0, TemperatureUnit.CELSIUS);
+
+		System.out.println(
+		        temp.convertTo(TemperatureUnit.FAHRENHEIT)
+		);
 	}
 }
