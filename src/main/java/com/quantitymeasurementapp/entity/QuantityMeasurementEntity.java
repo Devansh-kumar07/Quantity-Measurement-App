@@ -1,29 +1,22 @@
 package com.quantitymeasurementapp.entity;
 
-import java.io.Serializable;
-
-public class QuantityMeasurementEntity implements Serializable {
+public class QuantityMeasurementEntity {
 
     private String operation;
-    private String result;
-    private boolean error;
+    private double value;
+    private String unit;
 
-    public QuantityMeasurementEntity(String operation, String result) {
+    public QuantityMeasurementEntity(
+            String operation,
+            double value,
+            String unit) {
+
         this.operation = operation;
-        this.result = result;
-        this.error = false;
+        this.value = value;
+        this.unit = unit;
     }
 
-    public QuantityMeasurementEntity(String errorMessage) {
-        this.result = errorMessage;
-        this.error = true;
-    }
-
-    public boolean hasError() {
-        return error;
-    }
-
-    public String getResult() {
-        return result;
-    }
+    public String getOperation() { return operation; }
+    public double getValue() { return value; }
+    public String getUnit() { return unit; }
 }

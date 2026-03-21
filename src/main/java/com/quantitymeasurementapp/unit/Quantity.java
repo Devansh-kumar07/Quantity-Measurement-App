@@ -1,4 +1,4 @@
-package com.quantitymeasurementapp;
+package com.quantitymeasurementapp.unit;
 
 import java.util.Objects;
 

@@ -1,30 +1,20 @@
 package com.quantitymeasurementapp.controller;
 
-
-
-import com.quantitymeasurementapp.dto.QuantityDTO;
-import com.quantitymeasurementapp.service.IQuantityMeasurementService;
+import com.quantitymeasurementapp.service.QuantityMeasurementServiceImpl;
 
 public class QuantityMeasurementController {
 
-    private IQuantityMeasurementService service;
+    private final QuantityMeasurementServiceImpl service;
 
-    public QuantityMeasurementController(IQuantityMeasurementService service) {
+    public QuantityMeasurementController(
+            QuantityMeasurementServiceImpl service) {
         this.service = service;
     }
 
-    public void performAddition(QuantityDTO a, QuantityDTO b) {
+    public void performAdd(double result, String unit) {
 
-        QuantityDTO result = service.add(a, b);
+        service.record("ADD", result, unit);
 
-        System.out.println("Addition Result: "
-                + result.value + " " + result.unit);
-    }
-
-    public void performComparison(QuantityDTO a, QuantityDTO b) {
-
-        boolean result = service.compare(a, b);
-
-        System.out.println("Comparison Result: " + result);
+        System.out.println("Saved: " + result + " " + unit);
     }
 }
