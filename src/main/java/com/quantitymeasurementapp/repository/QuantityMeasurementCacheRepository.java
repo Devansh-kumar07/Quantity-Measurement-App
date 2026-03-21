@@ -12,7 +12,7 @@ public class QuantityMeasurementCacheRepository
 
     private List<QuantityMeasurementEntity> cache = new ArrayList<>();
 
-    private QuantityMeasurementCacheRepository() {}
+    public QuantityMeasurementCacheRepository() {}
 
     public static QuantityMeasurementCacheRepository getInstance() {
 
