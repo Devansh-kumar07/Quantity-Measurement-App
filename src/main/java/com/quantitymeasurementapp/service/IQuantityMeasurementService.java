@@ -8,7 +8,7 @@ public interface IQuantityMeasurementService {
 
     QuantityDTO convert(QuantityDTO input, String targetUnit);
 
-    QuantityDTO add(QuantityDTO a, QuantityDTO b);
+    QuantityDTO add(QuantityDTO a , QuantityDTO b);
 
     QuantityDTO subtract(QuantityDTO a, QuantityDTO b);
 
