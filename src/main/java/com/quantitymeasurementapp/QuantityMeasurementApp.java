@@ -13,11 +13,11 @@ public class QuantityMeasurementApp {
         QuantityMeasurementCacheRepository repo =
                 new QuantityMeasurementCacheRepository();
 
-        QuantityMeasurementServiceImpl service =
+        IQuantityMeasurementService service =
                 new QuantityMeasurementServiceImpl(repo);
 
         QuantityMeasurementController controller =
-                new QuantityMeasurementController((IQuantityMeasurementService) service);
+                new QuantityMeasurementController(service);
 
         QuantityDTO a = new QuantityDTO(2.0, "FEET");
         QuantityDTO b = new QuantityDTO(12.0, "INCH");
