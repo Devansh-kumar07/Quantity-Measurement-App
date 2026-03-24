@@ -23,5 +23,6 @@ public class QuantityMeasurementApp {
         QuantityDTO b = new QuantityDTO(12.0, "INCH");
 
         controller.performAddition(a, b); 
+        controller.showAllRecords();
     }
 }

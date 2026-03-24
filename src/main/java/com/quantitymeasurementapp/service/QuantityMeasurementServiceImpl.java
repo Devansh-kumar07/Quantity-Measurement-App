@@ -1,5 +1,7 @@
 package com.quantitymeasurementapp.service;
 
+import java.util.List;
+
 import com.quantitymeasurementapp.dto.QuantityDTO;
 import com.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
@@ -54,7 +56,7 @@ public class QuantityMeasurementServiceImpl
         QuantityDTO result =
                 new QuantityDTO(resultValue, a.unit);
 
-        record("ADD", resultValue, a.unit);
+        record("ADD", result.value, result.unit); 
 
         return result;
     }
@@ -86,5 +88,8 @@ public class QuantityMeasurementServiceImpl
         record("DIVIDE", result, "RATIO");
 
         return result;
+    }
+    public List<QuantityMeasurementEntity> getAllRecords() {
+        return repository.findAll();
     }
 }
