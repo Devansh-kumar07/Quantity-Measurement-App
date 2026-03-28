@@ -1,26 +1,22 @@
 package com.quantitymeasurementapp.util;
 
-import java.io.InputStream;
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ApplicationConfig {
 
-    private static final Properties props = new Properties();
+    @Value("${spring.application.name}")
+    private String applicationName;
 
-    static {
-        try (InputStream input =
-                     ApplicationConfig.class
-                     .getClassLoader()
-                     .getResourceAsStream("application.properties")) {
+    @Value("${spring.datasource.url}")
+    private String datasourceUrl;
 
-            props.load(input);
-
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load config", e);
-        }
+    public String getApplicationName() {
+        return applicationName;
     }
 
-    public static String get(String key) {
-        return props.getProperty(key);
+    public String getDatasourceUrl() {
+        return datasourceUrl;
     }
 }
