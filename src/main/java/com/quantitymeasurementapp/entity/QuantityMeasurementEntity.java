@@ -28,6 +28,6 @@ public class QuantityMeasurementEntity {
 
     public Long getId() { return id; }
     public String getOperation() { return operation; }
-    public double getValue() { return amount; }
+    public double getAmount() { return amount; }
     public String getUnit() { return unit; }
 }
