@@ -16,7 +16,7 @@
     <artifactId>quantity-measurement-app</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <n>Quantity Measurement Application</n>
+    <name>Quantity Measurement Application</name>
 
     <properties>
         <java.version>17</java.version>
