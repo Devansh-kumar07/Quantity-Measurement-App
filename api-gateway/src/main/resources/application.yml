@@ -1,0 +1,91 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+              - "http://127.0.0.1:4200"
+              - "https://qma-frontend-angular.vercel.app"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            allowCredentials: false
+
+      routes:
+        - id: user-service-auth
+          uri: lb://user-service
+          predicates:
+            - Path=/auth/**
+
+        - id: user-service-oauth2
+          uri: lb://user-service
+          predicates:
+            - Path=/oauth2/**
+
+        - id: user-service-login
+          uri: lb://user-service
+          predicates:
+            - Path=/login/**
+
+        - id: measurement-service-compare
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/v1/quantities/compare
+
+        - id: measurement-service-convert
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/v1/quantities/convert
+
+        - id: measurement-service-add
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/v1/quantities/add
+
+        - id: measurement-service-subtract
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/v1/quantities/subtract
+
+        - id: measurement-service-divide
+          uri: lb://measurement-service
+          predicates:
+            - Path=/api/v1/quantities/divide
+
+        - id: history-service-frontend
+          uri: lb://history-service
+          predicates:
+            - Path=/api/v1/quantities/history/**
+          filters:
+            - RewritePath=/api/v1/quantities/history(?<segment>.*), /history${segment}
+
+        - id: history-service-internal
+          uri: lb://history-service
+          predicates:
+            - Path=/history/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: localhost
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: INFO

@@ -1,0 +1,7 @@
+com\qma\historyservice\exception\GlobalExceptionHandler.class
+com\qma\historyservice\repository\HistoryRepository.class
+com\qma\historyservice\controller\HistoryController.class
+com\qma\historyservice\exception\GlobalExceptionHandler$ErrorResponse.class
+com\qma\historyservice\HistoryServiceApplication.class
+com\qma\historyservice\entity\HistoryEntity.class
+com\qma\historyservice\security\SecurityConfig.class
